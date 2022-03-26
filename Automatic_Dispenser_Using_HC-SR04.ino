@@ -1,6 +1,8 @@
  // pins and variables
 #define echoPin 4               
 #define trigPin 5
+#define emptyContainer 6  // When the container is empty the connection is lost it makes 
+#define buzzer 7          // the buzzer make noice and inform that the container is empty
 #define delayTime 3000
 #define motorPin 10           
 int distance;
@@ -10,10 +12,28 @@ void setup()
 {
   pinMode(echoPin,INPUT);        // defining pin modes
   pinMode(trigPin,OUTPUT);  
-  pinMode(motorPin, OUTPUT);        
+  pinMode(motorPin, OUTPUT);  
+  pinMode(emptyContainer,INPUT);
+  pinMode(buzzer, OUTPUT);
+  digitalWrite(buzzer, LOW);  
 }
 
 void loop()
+{
+  if(digitalRead(emptyContainer) == LOW)
+    {
+     digitalWrite(buzzer, HIGH);
+     delay(1000);
+     digitalWrite(buzzer, LOW);
+     delay(1000);
+   }
+  else
+    {
+      void dispense();
+    }
+}
+
+void dispense()
 {
   digitalWrite(trigPin,LOW);
   delayMicroseconds(2);
@@ -35,3 +55,5 @@ void loop()
     digitalWrite(motorPin,LOW);     
   }
 }
+
+ 
